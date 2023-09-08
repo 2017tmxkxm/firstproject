@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Controller
@@ -53,6 +54,30 @@ public class MemberController {
         model.addAttribute("memberList", memberList);
 
         return "members/index";
+    }
+
+    @GetMapping("/members/{id}/edit")
+    public String edit(@PathVariable Long id, Model model) {
+
+        Member memberEntity = memberRepository.findById(id).orElse(null);
+
+        model.addAttribute("member", memberEntity);
+
+        return "/members/edit";
+    }
+
+    @PostMapping("/members/update")
+    public String update(MemberForm form) {
+
+        Member memberEntity = form.toEntity();
+
+        Member target = memberRepository.findById(memberEntity.getId()).orElse(null);
+
+        if(target != null) {
+            memberRepository.save(memberEntity);
+        }
+
+        return "redirect:/members/" + memberEntity.getId();
     }
 
 }
