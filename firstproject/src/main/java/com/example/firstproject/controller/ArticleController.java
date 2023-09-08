@@ -29,12 +29,10 @@ public class ArticleController {
     public String createArticle(ArticleForm articleForm) {
 
         Article article = articleForm.toEntity();
-        log.info(articleForm.toString());
 
         Article saved = articleRepository.save(article);
-        log.info(saved.toString());
 
-        return "";
+        return "redirect:/articles/" + saved.getId();
     }
 
     @GetMapping("/articles/{id}")
