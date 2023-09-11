@@ -3,6 +3,7 @@ package com.example.firstproject.service;
 import com.example.firstproject.dto.ArticleForm;
 import com.example.firstproject.entity.Article;
 import org.junit.jupiter.api.Test;
+import org.mockito.internal.verification.argumentmatching.ArgumentMatchingTool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
@@ -80,6 +81,81 @@ class ArticleServiceTest {
 
         ArticleForm dto = new ArticleForm(id, title, content);
         Article article = articleService.create(dto);
+
+        assertEquals(expected, article);
+    }
+
+    @Test
+    @Transactional
+    void update_성공_존재하는_id와_title_content가_있는_dto_입력() {
+        // 예상 데이터
+        Long id = 1L;
+        String title = "제목1-수정";
+        String content = "내용1-수정";
+        Article expected = new Article(id, title, content);
+
+        // 실제 데이터
+        ArticleForm dto = new ArticleForm(id, title, content);
+        Article article = articleService.update(id, dto);
+
+        assertEquals(expected.toString(), article.toString());
+    }
+
+    @Test
+    @Transactional
+    void update_성공_존재하는_id와_title만_있는_dto_입력() {
+        // 예상 데이터
+        Long id = 1L;
+        String title = "제목1-수정";
+        String content = null;
+        ArticleForm dto = new ArticleForm(id, title, content);
+        Article expected = new Article(1L, "제목1-수정", "내용1");
+
+        // 실제 데이터
+        Article article = articleService.update(id, dto);
+
+        assertEquals(expected.toString(), article.toString());
+    }
+
+    @Test
+    @Transactional
+    void update_실패_존재하지_않는_id의_dto_입력() {
+        // 예상 데이터
+        Long id = 4L;
+        String title = "제목4";
+        String content = "내용4";
+        Article expected = null;
+
+        // 실제 데이터
+        ArticleForm dto = new ArticleForm(id, title, content);
+        Article article = articleService.update(id, dto);
+
+        assertEquals(expected, article);
+    }
+
+
+    @Test
+    @Transactional
+    void delete_성공_존재하는_id_입력() {
+        // 예상 데이터
+        Long id = 1L;
+        Article expected = new Article(id, "제목1", "내용1");
+
+        // 실제 데이터
+        Article article = articleService.delete(id);
+
+        assertEquals(expected.toString(), article.toString());
+    }
+
+    @Test
+    @Transactional
+    void delete_실패_존재하지_않는_id_입력() {
+        // 예상 데이터
+        Long id = -1L;
+        Article expected = null;
+
+        // 실제 데이터
+        Article article = articleService.delete(id);
 
         assertEquals(expected, article);
     }
