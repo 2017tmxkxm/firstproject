@@ -3,15 +3,15 @@ package com.example.firstproject.api;
 
 import com.example.firstproject.dto.CommentDto;
 import com.example.firstproject.service.CommentService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 public class CommentApiController {
     @Autowired
@@ -21,5 +21,11 @@ public class CommentApiController {
     public ResponseEntity<List<CommentDto>> comments(@PathVariable Long articleId) {
         List<CommentDto> dtos = commentService.comments(articleId);
         return ResponseEntity.status(HttpStatus.OK).body(dtos);
+    }
+
+    @PostMapping("/api/articles/{articleId}/comments")
+    public ResponseEntity<CommentDto> create(@PathVariable Long articleId, @RequestBody CommentDto dto) {
+        CommentDto createDto = commentService.create(articleId, dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createDto);
     }
 }
