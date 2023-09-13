@@ -28,4 +28,10 @@ public class CommentApiController {
         CommentDto createDto = commentService.create(articleId, dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createDto);
     }
+
+    @PatchMapping("/api/comments/{id}")
+    public ResponseEntity<CommentDto> update(@PathVariable Long id, @RequestBody CommentDto dto) {
+        CommentDto updatedDto = commentService.update(id, dto);
+        return ResponseEntity.status(HttpStatus.OK).body(updatedDto);
+    }
 }
