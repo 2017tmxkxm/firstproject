@@ -12,7 +12,12 @@
                         data-bs-nickname="{{nickname}}"
                         data-bs-body="{{body}}"
                         data-bs-article-id="{{articleId}}">수정</button>
+                <!-- 댓글 삭제 버튼 -->
+                <button type="button"
+                        class="btn btn-sm btn-outline-danger comment-delete-btn"
+                        data-comment-id="{{id}}">삭제</button>
             </div>
+
             <!-- Modal -->
             <div class="modal fade" id="comment-edit-modal" tabindex="-1">
                 <div class="modal-dialog">
@@ -67,6 +72,7 @@
             document.querySelector("#edit-comment-article-id").value = articleId;
         });
     }
+
     {
         const commentUpdateBtn = document.querySelector("#comment-update-btn");
         commentUpdateBtn.addEventListener("click", function() {
@@ -92,3 +98,39 @@
         });
     }
 </script>
+
+<!-- 댓글 삭제 -->
+<script>
+    {
+        const commentDeleteBtn = document.querySelectorAll(".comment-delete-btn");
+        commentDeleteBtn.forEach(btn => {
+            btn.addEventListener("click", (e) => {
+                const commentDeleteBtn = e.target;
+                const commentId = commentDeleteBtn.getAttribute("data-comment-id");
+                const url = `/api/comments/${commentId}`;
+                fetch(url, {
+                    method: "DELETE"
+                }).then(response => {
+                    if(!response.ok) {
+                        alert("댓글 삭제 실패");
+                        retrun;
+                    }
+                    const target =document.querySelector(`#comments-${commentId}`);
+                    target.remove();
+                    const msg = `${commentId}번 댓글을 삭제했습니다 .`;
+                    alert(msg);
+                    window.location.reload();
+                });
+            });
+        });
+    }
+</script>
+
+
+
+const cancle = document.querySelectorAll(".perrequisite");
+cancle.forEach((item) => {
+    itme.style.textDeecoration = "line-though";
+
+})
+
