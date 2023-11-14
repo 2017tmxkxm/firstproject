@@ -1,17 +1,13 @@
 # firstproject
-스프링부트3 CRUD
+JPA를 활용한 CRUD - 1 
 
-### IDE
-* IntelliJ
-
-### SpringBoot 
-* 3.1.0
-
-### JDK
-* JDK 17 사용
-
-### Bootstrap 
-* v5.0.2
+📒 <br>
+  + SpringBoot (3.1.0)
+  + Java (17)
+  + Bootstrap (5.0.2)
+  + Mustache
+  + JPA
+  + InelliJ
 
 #### 출처
 * 코딩 자율학습 스프링부트3
